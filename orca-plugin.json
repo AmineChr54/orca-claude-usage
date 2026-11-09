@@ -1,0 +1,180 @@
+{
+  "manifestVersion": 2,
+  "execution": "trusted-worker",
+  "id": "claude-usage",
+  "name": "Claude Usage",
+  "version": "1.2.0",
+  "description": "Shows the 5-hour and weekly limits of each of your Claude accounts in the status bar, with reset times. Accounts, limits shown, layout and refresh rate are set in this plugin's settings.",
+  "author": {
+    "name": "Amine Cheikhrouhou"
+  },
+  "license": "MIT",
+  "engines": {
+    "orca": ">=1.4.248"
+  },
+  "pluginApi": 1,
+  "main": "worker.mjs",
+  "capabilities": [
+    {
+      "kind": "settings:own"
+    }
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "claudeUsage.refresh",
+        "title": "Claude Usage: refresh now"
+      }
+    ],
+    "statusBarItems": [
+      {
+        "id": "slot1",
+        "text": "Claude usage…",
+        "tooltip": "Claude usage (click to refresh)",
+        "command": "claudeUsage.refresh"
+      },
+      {
+        "id": "slot2",
+        "text": "…",
+        "tooltip": "Claude usage (click to refresh)",
+        "command": "claudeUsage.refresh"
+      },
+      {
+        "id": "slot3",
+        "text": "…",
+        "tooltip": "Claude usage (click to refresh)",
+        "command": "claudeUsage.refresh"
+      },
+      {
+        "id": "slot4",
+        "text": "…",
+        "tooltip": "Claude usage (click to refresh)",
+        "command": "claudeUsage.refresh"
+      }
+    ],
+    "settings": [
+      {
+        "key": "accounts",
+        "title": "Accounts",
+        "description": "One account per line: Label | provider | config folder. Up to 4 lines. Start a line with # to switch it off without deleting it. Only the claude provider is supported so far; the config folder is the one the account's CLAUDE_CONFIG_DIR points to (~ means your home folder).",
+        "type": "string",
+        "multiline": true,
+        "default": "Claude | claude | ~/.claude\nPersonal | claude | ~/.claude-work"
+      },
+      {
+        "key": "showSession",
+        "title": "Show the 5-hour limit",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "showWeekly",
+        "title": "Show the weekly limit",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "showModelLimits",
+        "title": "Show per-model weekly limits",
+        "description": "Adds the separate weekly Sonnet / Opus limits to the tooltip, for plans that have them.",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "logo",
+        "title": "Logo before each account",
+        "description": "A short symbol shown before the account name. The default is the Claude starburst; leave empty for none. (Orca status bar items cannot show custom images, so this is a text symbol.)",
+        "type": "string",
+        "maxLength": 4,
+        "default": "✻"
+      },
+      {
+        "key": "bars",
+        "title": "Progress bars",
+        "description": "Draw a bar for the 5-hour limit, for both limits, or for none.",
+        "type": "string",
+        "enum": [
+          "session",
+          "both",
+          "none"
+        ],
+        "enumLabels": [
+          "5-hour limit only",
+          "Both limits",
+          "No bars"
+        ],
+        "default": "session"
+      },
+      {
+        "key": "barWidth",
+        "title": "Progress bar length",
+        "type": "integer",
+        "minimum": 4,
+        "maximum": 16,
+        "default": 8
+      },
+      {
+        "key": "layout",
+        "title": "Status bar layout",
+        "description": "Full shows when each limit resets; compact shows only the percentages and the time left.",
+        "type": "string",
+        "enum": [
+          "full",
+          "compact"
+        ],
+        "enumLabels": [
+          "Full (with reset times)",
+          "Compact"
+        ],
+        "default": "full"
+      },
+      {
+        "key": "clock",
+        "title": "Clock for the weekly reset",
+        "type": "string",
+        "enum": [
+          "24h",
+          "12h"
+        ],
+        "enumLabels": [
+          "24-hour",
+          "12-hour"
+        ],
+        "default": "24h"
+      },
+      {
+        "key": "refreshMinutes",
+        "title": "Refresh every (minutes)",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 60,
+        "default": 3
+      },
+      {
+        "key": "warnAt",
+        "title": "Turn yellow at (%)",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 100,
+        "default": 70
+      },
+      {
+        "key": "dangerAt",
+        "title": "Turn red at (%)",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 100,
+        "default": 90
+      }
+    ],
+    "panels": [
+      {
+        "id": "usage",
+        "title": "Claude Usage",
+        "icon": "bar-chart-3",
+        "ui": "html",
+        "entry": "panel.html"
+      }
+    ]
+  }
+}

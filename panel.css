@@ -1,0 +1,47 @@
+:root { --claude: #d97757; --warn: #e5a93d; --danger: #e5484d; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 12px;
+  background: var(--orca-background); color: var(--orca-foreground);
+  font: 13px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+h1 { font-size: 13px; font-weight: 600; margin: 0; flex: 1; }
+.muted { color: var(--orca-muted-foreground); font-size: 12px; }
+button#refresh {
+  display: grid; place-items: center; width: 24px; height: 24px; padding: 0;
+  border: 0; border-radius: 6px; background: transparent; color: var(--orca-muted-foreground); cursor: pointer;
+}
+button#refresh:hover { background: var(--orca-accent); color: var(--orca-accent-foreground); }
+button#refresh.spin svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.card {
+  background: var(--orca-card); color: var(--orca-card-foreground);
+  border: 1px solid var(--orca-border); border-radius: var(--orca-radius, 8px);
+  padding: 12px; margin-bottom: 10px;
+}
+.title { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.title img { flex: none; display: block; }
+.title .name { font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.badge {
+  font-size: 11px; padding: 1px 7px; border-radius: 999px;
+  background: var(--orca-muted); color: var(--orca-muted-foreground); text-transform: capitalize;
+}
+
+.limit + .limit { margin-top: 12px; }
+.limit .row { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.limit .label { font-weight: 500; }
+.limit .pct { font-variant-numeric: tabular-nums; font-weight: 600; }
+.limit.warn .pct { color: var(--warn); }
+.limit.danger .pct { color: var(--danger); }
+.track { height: 8px; margin: 6px 0; border-radius: 999px; background: var(--orca-muted); overflow: hidden; }
+.fill { height: 100%; border-radius: 999px; background: var(--claude); min-width: 0; transition: width 0.4s ease; }
+.warn .fill { background: var(--warn); }
+.danger .fill { background: var(--danger); }
+.limit.sub .label { font-weight: 400; color: var(--orca-muted-foreground); }
+
+.error {
+  display: flex; gap: 8px; padding: 8px 10px; margin-top: 10px; border-radius: 6px;
+  background: color-mix(in srgb, var(--warn) 14%, transparent); color: var(--orca-foreground); font-size: 12px;
+}
